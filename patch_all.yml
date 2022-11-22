@@ -1,0 +1,22 @@
+---
+- hosts: world
+  gather_facts: true
+  become: true
+
+  tasks:
+#  - debug:
+#      msg:
+#         - "{{ ansible_distribution }}"
+#         - "{{ ansible_distribution_file_variety }}"
+
+  - name: update dnf
+    dnf:
+      name: "*"
+      state: latest
+    when: ansible_distribution_file_variety == "RedHat"
+
+  - name: update apt
+    apt:
+      name: "*"
+      state: latest
+    when: ansible_distribution_file_variety == "Debian"
